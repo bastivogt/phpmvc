@@ -75,7 +75,7 @@ function previousUrl(): string {
 
 function notFound() {
     http_response_code(404);
-    require 'views/404.php';
+    view("Page/not-found");
     exit;
 }
 
