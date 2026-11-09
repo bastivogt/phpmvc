@@ -1,0 +1,17 @@
+<?php
+namespace App\Controllers;  
+
+
+class PageController {
+    public function index() {
+        
+        d("PageController index called");
+        view("Page/index");
+    }
+
+    public function notFound() {
+        http_response_code(404);
+
+        view("Page/not-found");
+    }
+}
