@@ -7,7 +7,9 @@
 <?php endif; ?>
 
 <p>
-    <a href="<?php echo previousUrl(); ?>">Back to Products</a>
+    <a href="/products">Back to Products</a>
+    <a href="/products/<?php echo $product['id'] ?? ''; ?>/edit">Edit Product</a>
+    <a href="/products/<?php echo $product['id'] ?? ''; ?>/delete">Delete Product</a>
 </p>
 
 <?php getPartial("Partials/footer"); ?>

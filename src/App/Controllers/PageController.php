@@ -10,8 +10,6 @@ class PageController {
     }
 
     public function notFound() {
-        http_response_code(404);
-
-        return view("Page/not-found", ['title' => 'Not Found']);
-    }
+        return notFound();
+    }   
 }

@@ -1,3 +1,3 @@
-<?php getPartial("Partials/header", ['title' => $title]); ?>
-<h1>404 Not Found</h1>
+<?php getPartial("Partials/header", ['title' => '404 Page Not Found']); ?>
+<h1>404 - Page Not Found</h1>
 <?php getPartial("Partials/footer"); ?>

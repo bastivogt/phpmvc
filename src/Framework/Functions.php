@@ -75,14 +75,14 @@ function previousUrl(): string {
 
 function notFound() {
     http_response_code(404);
-    view("Page/not-found");
+    view("Page/not-found",['title' => '404 Page Not Found']);
     exit;
 }
 
 
 function getPartial(string $name, array $context = []): void
 {
-    $file = srcPath("App/Views/$name.php");
+    $file = srcPath("App/Views/$name.view.php");
 
     if (file_exists($file)) {
         ob_start();

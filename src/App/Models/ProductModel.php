@@ -65,5 +65,22 @@ class ProductModel
             'name' => $data['name'],
             'description' => $data['description']
         ]);
-    }   
+    }  
+    
+    
+    public function updateProduct($id, $data)
+    {
+        $stmt = $this->pdo->prepare("UPDATE product SET name = :name, description = :description WHERE id = :id");
+        return $stmt->execute([
+            'id' => $id,
+            'name' => $data['name'],
+            'description' => $data['description']
+        ]);
+    }
+
+    public function deleteProduct($id)
+    {
+        $stmt = $this->pdo->prepare("DELETE FROM product WHERE id = :id");
+        return $stmt->execute(['id' => $id]);
+    }
 }
