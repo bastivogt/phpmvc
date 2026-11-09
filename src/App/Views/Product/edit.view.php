@@ -10,8 +10,8 @@
 
 <form action="/products/<?php echo $product['id'] ?? ''; ?>" method="post">
     <?php getPartial('Product/_form', [
-        'name' => $product['name'] ?? '',
-        'description' => $product['description'] ?? ''
+        'name' => esc($product['name']) ?? '',
+        'description' => esc($product['description']) ?? ''
     ]); ?>
     <br>
     <button type="submit">Update</button>

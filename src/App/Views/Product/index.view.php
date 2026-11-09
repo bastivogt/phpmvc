@@ -6,7 +6,7 @@
 <?php if(!empty($products)) : ?>
     <ul>
         <?php foreach($products as $product) : ?>
-            <li><a href="/products/<?php echo $product['id']; ?>"><?php echo $product['name']; ?></a></li>
+            <li><a href="/products/<?php echo esc($product['id']); ?>"><?php echo $product['name']; ?></a></li>
         <?php endforeach; ?>
     </ul>
 <?php else : ?>

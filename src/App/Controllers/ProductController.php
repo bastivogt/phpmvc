@@ -33,7 +33,6 @@ class ProductController {
 
     public function create() {
         return view('Product/create', [
-            'title' => 'Create Product', 
             'errors' => []
         ]);
     }

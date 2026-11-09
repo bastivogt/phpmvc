@@ -1,4 +1,4 @@
-<?php getPartial("Partials/header", ['title' => $title]); ?>
+<?php getPartial("Partials/header", ['title' => "Create Product"]); ?>
 <h1>Create Product</h1>
 <?php if(!empty($errors)) : ?>
     <ul>

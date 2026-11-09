@@ -1,7 +1,7 @@
-<?php getPartial("Partials/header", ['title' => $title]); ?>
-<h1><?php echo $title; ?></h1>
+<?php getPartial("Partials/header", ['title' => esc($title)]); ?>
+<h1><?php echo esc($title); ?></h1>
 <?php if(!empty($product)) : ?>
-    <p><?php echo $product['description']; ?></p>
+    <p><?php echo esc($product['description']); ?></p>
 <?php else : ?>
     <p>Product not found.</p>
 <?php endif; ?>
