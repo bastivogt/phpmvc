@@ -6,8 +6,9 @@ $GLOBALS['settings']['app'] = [
 ];
 
 $GLOBALS['settings']['database'] = [
-    'host' => 'localhost',
-    'name' => 'product_db',
+    //'host' => 'localhost',
+    'host' => '127.0.0.1',
+    'name' => 'db-phpmvc',
     'user' => 'root',
     'password' => 'Function7',
     'port' => 3308
