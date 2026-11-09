@@ -1,5 +1,8 @@
-<?php include srcPath("App/Views/Partials/header.php"); ?>
+<?php getPartial("Partials/header", ['title' => $title]); ?>
 <h1>Product Index</h1>
+<p>
+    <a href="/products/create">Create New Product</a>
+</p>
 <?php if(!empty($products)) : ?>
     <ul>
         <?php foreach($products as $product) : ?>
@@ -10,4 +13,4 @@
     <p>No products found.</p>
 <?php endif; ?>
 
-<?php include srcPath("App/Views/Partials/footer.php"); ?>
+<?php getPartial("Partials/footer"); ?>

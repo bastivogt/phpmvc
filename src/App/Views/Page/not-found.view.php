@@ -1,3 +1,3 @@
-<?php include srcPath("App/Views/Partials/header.php"); ?>
+<?php getPartial("Partials/header", ['title' => $title]); ?>
 <h1>404 Not Found</h1>
-<?php include srcPath("App/Views/Partials/footer.php"); ?>
+<?php getPartial("Partials/footer"); ?>

@@ -79,3 +79,18 @@ function notFound() {
     exit;
 }
 
+
+function getPartial(string $name, array $context = []): void
+{
+    $file = srcPath("App/Views/$name.php");
+
+    if (file_exists($file)) {
+        ob_start();
+        extract($context);
+        require $file;
+        $tpl = ob_get_clean();
+        echo $tpl;
+    } else {
+        echo "Partial '$name' not found";
+    }
+}
