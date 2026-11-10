@@ -27,7 +27,7 @@ class TodoController {
     }
 
     public function show($id) {
-        $todo = $this->getObjectOr404($id);
+        $todo = $this->getObjectOr404((int)$id);
         return view('Todo/show', ['title' => 'Todo Details', 'todo' => $todo]);
     }
 
@@ -64,7 +64,7 @@ class TodoController {
     }
 
     public function edit($id) {
-        $todo = $this->getObjectOr404($id);
+        $todo = $this->getObjectOr404((int)$id);
         return view('Todo/edit', [
             'title' => 'Edit Todo', 
             'todo' => $todo,
@@ -73,7 +73,7 @@ class TodoController {
     }
 
     public function update($id) {
-        $todo = $this->getObjectOr404($id);
+        $todo = $this->getObjectOr404((int)$id);
         $title = $_POST['title'] ?? '';
         $description = $_POST['description'] ?? '';
         $done = isset($_POST['done']) ? 1 : 0;
@@ -98,7 +98,7 @@ class TodoController {
 
 
     public function delete($id) {
-        $todo = $this->getObjectOr404($id);
+        $todo = $this->getObjectOr404((int)$id);
         return view('Todo/delete', [
             'title' => 'Delete Todo',
             'todo' => $todo
@@ -106,7 +106,7 @@ class TodoController {
     }
     
     public function destroy($id) {
-        $todo = $this->getObjectOr404($id);
+        $todo = $this->getObjectOr404((int)$id);
         $this->model->delete($id);
         return redirect('/todos');
     }
