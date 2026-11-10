@@ -8,7 +8,7 @@
     </ul>
 <?php endif; ?>
 
-<form action="/products/<?php echo $product['id'] ?? ''; ?>" method="post">
+<form action="/products/<?php echo $product['id']; ?>" method="post">
     <?php getPartial('Product/_form', [
         'name' => esc($product['name']) ?? '',
         'description' => esc($product['description']) ?? ''

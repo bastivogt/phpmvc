@@ -6,7 +6,7 @@ require __DIR__ . '/../Framework/AutoLoader.php';
 use Framework\Database;
 
 use App\Models\ProductModel;
-
+use App\Models\TodoModel;
 
 
 function main() {
@@ -14,7 +14,9 @@ function main() {
     
     // Your database synchronization logic here
     ProductModel::createTable();
+    TodoModel::createTable();
     //ProductModel::dropTable();
+    //TodoModel::dropTable();
 }
 
 main();

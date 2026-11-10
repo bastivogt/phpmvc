@@ -1,6 +1,7 @@
 <?php
 use App\Controllers\PageController;
 use App\Controllers\ProductController;
+use App\Controllers\TodoController;
 use Framework\Router;
 
 $router = new Router();
@@ -17,6 +18,16 @@ $router->get('#^/products/(?<id>\d+)/edit$#', [ProductController::class, 'edit']
 $router->post('#^/products/(?<id>\d+)$#', [ProductController::class, 'update']);
 $router->get('#^/products/(?<id>\d+)/delete$#', [ProductController::class, 'delete']);
 $router->post('#^/products/(?<id>\d+)/delete$#', [ProductController::class, 'destroy']);
+
+// Todo routes
+$router->get('#^/todos$#', [TodoController::class, 'index']);
+$router->get('#^/todos/(?<id>\d+)$#', [TodoController::class, 'show']);
+$router->get('#^/todos/create$#', [TodoController::class, 'create']);
+$router->post('#^/todos$#', [TodoController::class, 'store']);
+$router->get('#^/todos/(?<id>\d+)/edit$#', [TodoController::class, 'edit']);
+$router->post('#^/todos/(?<id>\d+)$#', [TodoController::class, 'update']);
+$router->get('#^/todos/(?<id>\d+)/delete$#', [TodoController::class, 'delete']);
+$router->post('#^/todos/(?<id>\d+)/delete$#', [TodoController::class, 'destroy']);
 
 
 $router->get('#^.*$#', [PageController::class, 'notFound']);
