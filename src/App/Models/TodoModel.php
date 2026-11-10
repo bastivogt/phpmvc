@@ -75,6 +75,8 @@ class TodoModel
         return $stmt->execute(['id' => $id]);
     }
 
+
+    // check if working correctly
     public function bulkCreate($todos)
     {
         $stmt = $this->pdo->prepare("INSERT INTO " . self::$table . " (title, description, done) VALUES (:title, :description, :done)");
@@ -82,7 +84,7 @@ class TodoModel
             $stmt->execute([
                 'title' => $todo['title'],
                 'description' => $todo['description'],
-                'done' => isset($todo['done']) ? $todo['done'] : false  
+                'done' => isset($todo['done']) ? 1 : 0  
             ]);
         }
     }
