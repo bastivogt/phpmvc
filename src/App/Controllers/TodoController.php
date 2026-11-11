@@ -5,6 +5,7 @@ use App\Models\TodoModel;
 use Framework\Controller;
 use Framework\Request;
 use App\Entities\TodoEntity;
+use App;
 
 class TodoController {
 
@@ -24,6 +25,7 @@ class TodoController {
 
     public function index() {
         $todos = $this->model->findAll();
+        d(App::$greeting);
         return view('Todo/index', ['title' => 'Todo Index', 'todos' => $todos]);
     }
 
