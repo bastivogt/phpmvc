@@ -6,7 +6,7 @@
 <?php if(!empty($todos)) : ?>
     <ul>
         <?php foreach($todos as $todo) : ?>
-            <li><a href="/todos/<?php echo esc($todo['id']); ?>"><?php echo $todo['title']; ?></a></li>
+            <li><a href="/todos/<?php echo esc($todo->id); ?>"><?php echo $todo->title; ?></a></li>
         <?php endforeach; ?>
     </ul>
 <?php else : ?>

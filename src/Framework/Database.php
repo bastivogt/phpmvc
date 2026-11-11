@@ -7,6 +7,7 @@ use PDOException;
 class Database
 {
     private static $pdo;
+    private static $stmt; 
 
     public static function connect()
     {
@@ -30,5 +31,29 @@ class Database
     public static function getConnection()
     {
         return self::$pdo;
+    }
+
+    public static function disconnect()
+    {
+        self::$pdo = null;
+    }
+
+    public static function query($sql, $params = [])
+    {
+        self::$stmt = self::$pdo->prepare($sql);
+        self::$stmt->execute($params);
+        return self::$stmt;
+    }
+
+    public static function fetch($entity)
+    {
+        self::$stmt->setFetchMode(PDO::FETCH_CLASS, $entity);
+        return self::$stmt->fetch();
+    }
+
+    public static function fetchAll($entity)
+    {
+        self::$stmt->setFetchMode(PDO::FETCH_CLASS, $entity);
+        return self::$stmt->fetchAll();
     }
 }

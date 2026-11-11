@@ -4,6 +4,7 @@ namespace App\Controllers;
 use App\Models\TodoModel;
 use Framework\Controller;
 use Framework\Request;
+use App\Entities\TodoEntity;
 
 class TodoController {
 
@@ -28,38 +29,37 @@ class TodoController {
 
     public function show($id) {
         $todo = $this->getObjectOr404((int)$id);
-        return view('Todo/show', ['title' => 'Todo Details', 'todo' => $todo]);
+        return view('Todo/show', ['title' => $todo->title, 'todo' => $todo]);
     }
 
     public function create() {
         return view('Todo/create', [
             'title' => 'Create Todo',
-            'todo' => ['title' => '', 'description' => '', 'done' => false],
+            'todo' => new TodoEntity(),
             'errors' => []
         ]);
     }
 
     public function store() {
-        $title = $_POST['title'] ?? '';
-        $description = $_POST['description'] ?? '';
-        $done = isset($_POST['done']) ? 1 : 0;
-        d($done);
+        $todo = new TodoEntity();
+        $todo->fill($_POST);
+        $todo->done = isset($_POST['done']) ? 1 : 0;
 
-        if (empty($title) || empty($description)) {
+        if (empty($todo->title) || empty($todo->description)) {
             $errors = [];
-            if (empty($title)) {
+            if (empty($todo->title)) {
                 $errors[] = 'Title is required';
             }
-            if (empty($description)) {
+            if (empty($todo->description)) {
                 $errors[] = 'Description is required';
             }
             return view('Todo/create', [
                 'title' => 'Create Todo',
-                'todo' => ['title' => $title, 'description' => $description, 'done' => $done],
+                'todo' => $todo,
                 'errors' => $errors
             ]);
         }
-        $this->model->create(['title' => $title, 'description' => $description, 'done' => $done]);
+        $this->model->create($todo);
         redirect('/todos');
     }
 
@@ -74,25 +74,24 @@ class TodoController {
 
     public function update($id) {
         $todo = $this->getObjectOr404((int)$id);
-        $title = $_POST['title'] ?? '';
-        $description = $_POST['description'] ?? '';
-        $done = isset($_POST['done']) ? 1 : 0;
+        $todo->fill($_POST);
+        $todo->done = isset($_POST['done']) ? 1 : 0;
 
-        if (empty($title) || empty($description)) {
+        if (empty($todo->title) || empty($todo->description)) {
             $errors = [];
-            if (empty($title)) {
+            if (empty($todo->title)) {
                 $errors[] = 'Title is required';
             }
-            if (empty($description)) {
+            if (empty($todo->description)) {
                 $errors[] = 'Description is required';
             }
             return view('Todo/edit', [
                 'title' => 'Edit Todo',
-                'todo' => ['id' => $id, 'title' => $title, 'description' => $description, 'done' => $done],
+                'todo' => $todo,
                 'errors' => $errors
             ]);
         }
-        $this->model->update($id, ['title' => $title, 'description' => $description, 'done' => $done]);
+        $this->model->update($id, $todo);
         return redirect('/todos');
     }
 

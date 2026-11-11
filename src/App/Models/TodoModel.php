@@ -2,6 +2,8 @@
 namespace App\Models;
 
 use Framework\Database;
+use App\Entities\TodoEntity;
+use PDO;
 
 class TodoModel
 {
@@ -37,54 +39,50 @@ class TodoModel
 
     public function findAll()
     {
-        $stmt = $this->pdo->query("SELECT * FROM " . self::$table . " ORDER BY created_at DESC");
-        return $stmt->fetchAll();
+        Database::query("SELECT * FROM " . self::$table . " ORDER BY created_at DESC");
+        return Database::fetchAll(TodoEntity::class);
+
     }
 
     public function findOne($id)
     {
-        $stmt = $this->pdo->prepare("SELECT * FROM " . self::$table . " WHERE id = :id");
-        $stmt->execute(['id' => $id]);
-        return $stmt->fetch();
+        Database::query("SELECT * FROM " . self::$table . " WHERE id = :id", ['id' => $id]);
+        return Database::fetch(TodoEntity::class);  
     }
     
-    public function create($data)
+    public function create(TodoEntity $todo)
     {
-        $stmt = $this->pdo->prepare("INSERT INTO " . self::$table . " (title, description, done) VALUES (:title, :description, :done)");
-        return $stmt->execute([
-            'title' => $data['title'],
-            'description' => $data['description'],
-            'done' => $data['done']
+        Database::query("INSERT INTO " . self::$table . " (title, description, done) VALUES (:title, :description, :done)", [
+            'title' => $todo->title,
+            'description' => $todo->description,
+            'done' => $todo->done ? 1 : 0 
         ]);
     }
 
-    public function update($id, $data)
+    public function update($id, TodoEntity $todo)
     {
-        $stmt = $this->pdo->prepare("UPDATE " . self::$table . " SET title = :title, description = :description, done = :done WHERE id = :id");
-        return $stmt->execute([
+        Database::query("UPDATE " . self::$table . " SET title = :title, description = :description, done = :done WHERE id = :id", [
             'id' => $id,
-            'title' => $data['title'],
-            'description' => $data['description'],
-            'done' => isset($data['done']) ? $data['done'] : false
+            'title' => $todo->title,
+            'description' => $todo->description,
+            'done' => $todo->done ? 1 : 0
         ]);
     }
 
     public function delete($id)
     {
-        $stmt = $this->pdo->prepare("DELETE FROM " . self::$table . " WHERE id = :id");
-        return $stmt->execute(['id' => $id]);
+        Database::query("DELETE FROM " . self::$table . " WHERE id = :id", ['id' => $id]);
     }
 
 
     // check if working correctly
     public function bulkCreate($todos)
     {
-        $stmt = $this->pdo->prepare("INSERT INTO " . self::$table . " (title, description, done) VALUES (:title, :description, :done)");
         foreach ($todos as $todo) {
-            $stmt->execute([
-                'title' => $todo['title'],
-                'description' => $todo['description'],
-                'done' => isset($todo['done']) ? 1 : 0  
+            Database::query("INSERT INTO " . self::$table . " (title, description, done) VALUES (:title, :description, :done)", [
+                'title' => $todo->title,
+                'description' => $todo->description,
+                'done' => $todo->done ? 1 : 0
             ]);
         }
     }
