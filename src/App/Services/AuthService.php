@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Services; 
+use App; 
 
 class AuthService {
 
@@ -14,6 +15,7 @@ class AuthService {
 
     public static function getUser() {
         // Implement logic to get the currently authenticated user
+        return App::$currentUser;
     }
 
     public static function logout() {

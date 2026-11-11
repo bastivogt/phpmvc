@@ -6,6 +6,8 @@ use Framework\Database;
 class App {
 
     public static $greeting = "Hello from App";
+
+    public static $currentUser = null;
     
     public static function run() {
         $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
