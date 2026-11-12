@@ -6,13 +6,24 @@ use PDOException;
 
 class Database
 {
-    private static $pdo;
-    private static $stmt; 
+    private  $pdo;
+    private $stmt; 
 
-    public static function connect()
+    private static $instance = null;
+
+    public static function getInstance()
+    {
+        if (self::$instance === null) {
+            self::$instance = new self();
+            self::$instance->connect();
+        }
+        return self::$instance;
+    }
+
+    public function connect()
     {
         try {
-            self::$pdo = new PDO(
+            $this->pdo = new PDO(
                 "mysql:host={$GLOBALS['settings']['database']['host']};dbname={$GLOBALS['settings']['database']['name']};charset=utf8;port={$GLOBALS['settings']['database']['port']}",
                 $GLOBALS['settings']['database']['user'],
                 $GLOBALS['settings']['database']['password'],
@@ -25,35 +36,35 @@ class Database
             echo 'Connection failed: ' . $e->getMessage();
             exit;
         }
-        return self::$pdo;
+        return $this->pdo;
     }
 
-    public static function getConnection()
+    public function getConnection()
     {
-        return self::$pdo;
+        return $this->pdo;
     }
 
-    public static function disconnect()
+    public function disconnect()
     {
-        self::$pdo = null;
+        $this->pdo = null;
     }
 
-    public static function query($sql, $params = [])
+    public function query($sql, $params = [])
     {
-        self::$stmt = self::$pdo->prepare($sql);
-        self::$stmt->execute($params);
-        return self::$stmt;
+        $this->stmt = $this->pdo->prepare($sql);
+        $this->stmt->execute($params);
+        return $this->stmt;
     }
 
-    public static function fetch($entity)
+    public function fetch($entity)
     {
-        self::$stmt->setFetchMode(PDO::FETCH_CLASS, $entity);
-        return self::$stmt->fetch();
+        $this->stmt->setFetchMode(PDO::FETCH_CLASS, $entity);
+        return $this->stmt->fetch();
     }
 
-    public static function fetchAll($entity)
+    public function fetchAll($entity)
     {
-        self::$stmt->setFetchMode(PDO::FETCH_CLASS, $entity);
-        return self::$stmt->fetchAll();
+        $this->stmt->setFetchMode(PDO::FETCH_CLASS, $entity);
+        return $this->stmt->fetchAll();
     }
 }

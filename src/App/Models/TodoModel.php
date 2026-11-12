@@ -3,15 +3,19 @@ namespace App\Models;
 
 use Framework\Database;
 use App\Entities\TodoEntity;
+use Framework\BaseModel;
 use PDO;
+use App;
 
-class TodoModel
+class TodoModel extends BaseModel
 {
     public static $table = 'todos';
 
     public static function createTable()
     {
-        $pdo = Database::getConnection();
+        $db = Database::getInstance();  
+        $db->connect();
+        $pdo = $db->getConnection();
         $sql = "CREATE TABLE IF NOT EXISTS " . self::$table . " (
             id INT AUTO_INCREMENT PRIMARY KEY,
             title VARCHAR(255) NOT NULL,
@@ -25,34 +29,35 @@ class TodoModel
 
     public static function dropTable()
     {
-        $pdo = Database::getConnection();
+        $db = Database::getInstance();  
+        $db->connect();
+        $pdo = $db->getConnection();
         $sql = "DROP TABLE IF EXISTS " . self::$table;
         $pdo->exec($sql);
     }
 
-    private $pdo;
-    public function __construct()
+    public function __construct(Database $db)
     {
-        $this->pdo = Database::getConnection();
+        parent::__construct($db);
     }
 
 
     public function findAll()
     {
-        Database::query("SELECT * FROM " . self::$table . " ORDER BY created_at DESC");
-        return Database::fetchAll(TodoEntity::class);
+        $this->db->query("SELECT * FROM " . self::$table . " ORDER BY created_at DESC");
+        return $this->db->fetchAll(TodoEntity::class);
 
     }
 
     public function findOne($id)
     {
-        Database::query("SELECT * FROM " . self::$table . " WHERE id = :id", ['id' => $id]);
-        return Database::fetch(TodoEntity::class);  
+        $this->db->query("SELECT * FROM " . self::$table . " WHERE id = :id", ['id' => $id]);
+        return $this->db->fetch(TodoEntity::class);  
     }
     
     public function create(TodoEntity $todo)
     {
-        Database::query("INSERT INTO " . self::$table . " (title, description, done) VALUES (:title, :description, :done)", [
+        $this->db->query("INSERT INTO " . self::$table . " (title, description, done) VALUES (:title, :description, :done)", [
             'title' => $todo->title,
             'description' => $todo->description,
             'done' => $todo->done ? 1 : 0 
@@ -61,7 +66,7 @@ class TodoModel
 
     public function update($id, TodoEntity $todo)
     {
-        Database::query("UPDATE " . self::$table . " SET title = :title, description = :description, done = :done WHERE id = :id", [
+        $this->db->query("UPDATE " . self::$table . " SET title = :title, description = :description, done = :done WHERE id = :id", [
             'id' => $id,
             'title' => $todo->title,
             'description' => $todo->description,
@@ -71,7 +76,7 @@ class TodoModel
 
     public function delete($id)
     {
-        Database::query("DELETE FROM " . self::$table . " WHERE id = :id", ['id' => $id]);
+        $this->db->query("DELETE FROM " . self::$table . " WHERE id = :id", ['id' => $id]);
     }
 
 
@@ -79,7 +84,7 @@ class TodoModel
     public function bulkCreate($todos)
     {
         foreach ($todos as $todo) {
-            Database::query("INSERT INTO " . self::$table . " (title, description, done) VALUES (:title, :description, :done)", [
+            $this->db->query("INSERT INTO " . self::$table . " (title, description, done) VALUES (:title, :description, :done)", [
                 'title' => $todo->title,
                 'description' => $todo->description,
                 'done' => $todo->done ? 1 : 0

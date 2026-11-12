@@ -2,9 +2,10 @@
 namespace App\Models;
 
 use Framework\Database;
+use Framework\BaseModel;
 
 
-class ProductModel
+class ProductModel extends BaseModel
 {
 
     public static $table = 'products';
@@ -30,9 +31,10 @@ class ProductModel
     }
 
     private $pdo;
-    public function __construct()
+    public function __construct(Database $db)
     {
-        $this->pdo = Database::getConnection();
+        parent::__construct($db);
+        $this->pdo = $db->getConnection();
     }
 
 

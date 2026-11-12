@@ -2,9 +2,11 @@
 
 namespace App\Entities;
 
+use Framework\BaseEntity;
+
 use DateTime;
 
-class TodoEntity {
+class TodoEntity extends BaseEntity {
     public ?int $id = null;
     public string $description = '';
     public string $title = '';
@@ -12,14 +14,6 @@ class TodoEntity {
     public string $created_at = '';
     public string $updated_at = '';
 
-    public function fill(array $data): void
-    {
-        foreach ($data as $key => $value) {
-            if (property_exists($this, $key)) {
-                $this->$key = $value;
-            }
-        }
-    }
 
 
 }

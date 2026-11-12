@@ -6,13 +6,14 @@ use Framework\Controller;
 use Framework\Request;
 use App\Entities\TodoEntity;
 use App;
+use App\Config\Container;
 
 class TodoController {
 
     private $model;
 
-    public function __construct() {
-        $this->model = new TodoModel();
+    public function __construct(TodoModel $model) {
+        $this->model = $model;
     }
 
     private function getObjectOr404($id) {

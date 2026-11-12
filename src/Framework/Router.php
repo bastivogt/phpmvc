@@ -1,5 +1,6 @@
 <?php
 namespace Framework;
+use App;
 
 class Router {
     private $routes = [];
@@ -35,7 +36,8 @@ class Router {
                 $controller = $route['callback'][0];
                 $method = $route['callback'][1];
                 if(class_exists($controller) && method_exists($controller, $method)) {
-                    $controllerInstance = new $controller();
+                    //$controllerInstance = new $controller();
+                    $controllerInstance = App::$container->get($controller);    
                     $matches = array_filter(
                         $matches,
                         fn($key) => is_string($key),
