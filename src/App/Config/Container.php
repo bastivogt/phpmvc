@@ -7,6 +7,7 @@ use App\Models\TodoModel;
 use App\Controllers\TodoController;
 use App\Models\UserModel;
 use App\Controllers\UserController;
+use App\Controllers\PageController;
 
 $container = new DIContainer(); 
 
@@ -14,6 +15,11 @@ $container = new DIContainer();
 // DB
 $container->set(Database::class, function($container) {
     return new Database();
+});
+
+// Pages
+$container->set(PageController::class, function($container) {
+    return new PageController();
 });
 
 // Todos
