@@ -1,7 +1,7 @@
 <?php
 namespace Framework;
 
-class Message
+class FlashMessage
 {
     protected $message;
     protected $type;
@@ -10,7 +10,7 @@ class Message
     public static $TYPE_ERROR = 'error';
     public static $TYPE_INFO = 'info';
 
-    
+
     public function __construct($message, $type = null)
     {
         $this->message = $message;

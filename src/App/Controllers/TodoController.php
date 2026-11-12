@@ -8,7 +8,7 @@ use App\Entities\TodoEntity;
 use App;
 use App\Config\Container;
 use Framework\Session;
-use Framework\Message;
+use Framework\FlashMessage;
 
 class TodoController {
 
@@ -65,7 +65,7 @@ class TodoController {
             ]);
         }
         $this->model->create($todo);
-        Session::set('message', new Message('Todo created successfully', Message::$TYPE_SUCCESS));
+        Session::set('message', new FlashMessage('Todo created successfully', FlashMessage::$TYPE_SUCCESS));
         redirect('/todos');
     }
 
@@ -98,7 +98,7 @@ class TodoController {
             ]);
         }
         $this->model->update($id, $todo);
-        Session::set('message', new Message('Todo updated successfully', Message::$TYPE_INFO));
+        Session::set('message', new FlashMessage('Todo updated successfully', FlashMessage::$TYPE_INFO));
         return redirect('/todos');
     }
 
@@ -114,7 +114,7 @@ class TodoController {
     public function destroy($id) {
         $todo = $this->getObjectOr404((int)$id);
         $this->model->delete($id);
-        Session::set('message', new Message('Todo deleted successfully', Message::$TYPE_ERROR));
+        Session::set('message', new FlashMessage('Todo deleted successfully', FlashMessage::$TYPE_ERROR));
         return redirect('/todos');
     }
 }

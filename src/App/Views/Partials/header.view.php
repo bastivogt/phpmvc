@@ -1,18 +1,18 @@
 <?php
 use Framework\Session;
-use Framework\Message;
+use Framework\FlashMessage;
 
 if (Session::has('message')) {
-    $msg = Session::get('message');
-    $type = $msg->getType();
-    $message = $msg->getMessage();
+    $flashMessage = Session::get('message');
+    $type = $flashMessage->getType();
+    $message = $flashMessage->getMessage();
 
     $color = '';
-    if ($type === Message::$TYPE_SUCCESS) {
+    if ($type === FlashMessage::$TYPE_SUCCESS) {
         $color = 'hsl(91, 89%, 52%)';
-    } elseif ($type === Message::$TYPE_ERROR) {
+    } elseif ($type === FlashMessage::$TYPE_ERROR) {
         $color = 'rgb(226, 47, 47)';
-    } elseif ($type === Message::$TYPE_INFO) {
+    } elseif ($type === FlashMessage::$TYPE_INFO) {
         $color = 'rgb(47, 169, 226)';
     }
 }
