@@ -33,5 +33,11 @@ $container->set(UserController::class, function($container) {
     return new UserController($container->get(UserModel::class));
 });
 
+// AuthService
+use App\Services\AuthService;
+$container->set(AuthService::class, function($container) {
+    return new AuthService($container->get(UserModel::class));
+});
+
 
 return $container;

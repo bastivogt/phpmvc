@@ -8,13 +8,18 @@ class App {
 
     public static $greeting = "Hello from App";
 
-    public static $currentUser = null;
+    public static $currentUserID = null;
     public static $container;
     
     public static function run() {
+        session_start();
+        // $_SESSION['test'] = 'value';
+
+        
+
         $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
         $method = $_SERVER['REQUEST_METHOD'];
-        
+
         require __DIR__ . '/../src/Framework/Bootstrap.php';
 
 
@@ -26,6 +31,8 @@ class App {
 
         $db = self::$container->get(Database::class);
         $db->connect();
+
+        //d($_SESSION);
 
         require '../src/App/Config/Routes.php';
     }

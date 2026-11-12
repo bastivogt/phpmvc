@@ -2,23 +2,30 @@
 
 namespace App\Services; 
 use App; 
+use App\Models\UserModel;
 
 class AuthService {
+    private $userModel;
 
-    public static function authenticate($username, $password) {
+    function __construct(UserModel $userModel) {
+        $this->userModel = $userModel;
+        // Initialize the AuthService if needed
+    }
+
+    public function authenticate($username, $password) {
         // Implement authentication logic here
     }
 
-    public static function check() {
+    public function check() {
         // Implement logic to check if the user is authenticated
     }
 
-    public static function getUser() {
+    public function getUser() {
         // Implement logic to get the currently authenticated user
         return App::$currentUser;
     }
 
-    public static function logout() {
+    public function logout() {
         // Implement logic to log out the currently authenticated user
     }
 
