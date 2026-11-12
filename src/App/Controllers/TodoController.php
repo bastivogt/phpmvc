@@ -7,6 +7,8 @@ use Framework\Request;
 use App\Entities\TodoEntity;
 use App;
 use App\Config\Container;
+use Framework\Session;
+use Framework\Message;
 
 class TodoController {
 
@@ -63,6 +65,7 @@ class TodoController {
             ]);
         }
         $this->model->create($todo);
+        Session::set('message', new Message('Todo created successfully', Message::$TYPE_SUCCESS));
         redirect('/todos');
     }
 
@@ -95,6 +98,7 @@ class TodoController {
             ]);
         }
         $this->model->update($id, $todo);
+        Session::set('message', new Message('Todo updated successfully', Message::$TYPE_INFO));
         return redirect('/todos');
     }
 
@@ -110,6 +114,7 @@ class TodoController {
     public function destroy($id) {
         $todo = $this->getObjectOr404((int)$id);
         $this->model->delete($id);
+        Session::set('message', new Message('Todo deleted successfully', Message::$TYPE_ERROR));
         return redirect('/todos');
     }
 }

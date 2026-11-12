@@ -2,6 +2,7 @@
 
 use Framework\DIContainer;
 use Framework\Database;
+use Framework\Session;
 
 
 class App {
@@ -12,8 +13,10 @@ class App {
     public static $container;
     
     public static function run() {
-        session_start();
+        
         // $_SESSION['test'] = 'value';
+        
+        
 
         
 
@@ -22,6 +25,8 @@ class App {
 
         require __DIR__ . '/../src/Framework/Bootstrap.php';
 
+        Session::start();
+        Session::set('test', 'Hallo Test!');
 
         self::$container = require __DIR__ . '/../src/App/Config/Container.php';
 
@@ -33,6 +38,7 @@ class App {
         $db->connect();
 
         //d($_SESSION);
+        d(Session::get('test'));
 
         require '../src/App/Config/Routes.php';
     }
