@@ -1,5 +1,7 @@
 <?php
 
+use Framework\View;
+
 /**
  * Get the base path
  * 
@@ -20,19 +22,26 @@ function srcPath($path = "")
  * @param string $name
  * @return void
  */
+// function view(string $name, array $context = []): void
+// {
+//     $file = srcPath("App/Views/$name.view.php");
+
+//     if (file_exists($file)) {
+//         ob_start();
+//         extract($context);
+//         require $file;
+//         $tpl = ob_get_clean();
+//         echo $tpl;
+//     } else {
+//         echo "View '$name' not found";
+//     }
+// }
+
 function view(string $name, array $context = []): void
 {
-    $file = srcPath("App/Views/$name.view.php");
-
-    if (file_exists($file)) {
-        ob_start();
-        extract($context);
-        require $file;
-        $tpl = ob_get_clean();
-        echo $tpl;
-    } else {
-        echo "View '$name' not found";
-    }
+    
+    $view = new View(__DIR__ . '/../App/Views');
+    echo $view->render($name, $context);
 }
 
 function d(mixed $var) {
@@ -75,7 +84,7 @@ function previousUrl(): string {
 
 function notFound() {
     http_response_code(404);
-    view("Page/not-found",['title' => '404 Page Not Found']);
+    return view("Page/not-found",['title' => '404 Page Not Found']);
     exit;
 }
 

@@ -20,8 +20,8 @@ class PageController extends BaseController {
     }
 
     public function notFound() {
-        //return notFound();
-        http_response_code(404);
-        return $this->render("Page/not-found", ['title' => '404 - Not Found']);
+        return notFound();
+        // http_response_code(404);
+        // return $this->render("Page/not-found", ['title' => '404 - Not Found']);
     }   
 }
