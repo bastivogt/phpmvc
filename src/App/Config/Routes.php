@@ -34,4 +34,4 @@ $router->get('#^.*$#', [PageController::class, 'notFound']);
 
 
 
-$router->dispatch($method, $path);
+echo $router->dispatch($method, $path);

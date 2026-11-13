@@ -1,19 +1,33 @@
 <?php 
 namespace Framework;
 
+use Framework\View;
+
 class BaseController {
 
-    protected function render($name, $context = []) {
-        $file = __DIR__ . "/../App/Views/$name.view.php";
+    protected View $view;
 
-        if (file_exists($file)) {
-            ob_start();
-            extract($context);
-            require $file;
-            $tpl = ob_get_clean();
-            echo $tpl;
-        } else {
-            echo "View '$name' not found";
-        }
+    public function __construct()
+    {
+        $this->view = new View(__DIR__ . '/../App/Views');
     }
+
+    protected function render(string $view, array $data = []): string
+    {
+        return $this->view->render($view, $data);
+    }
+
+    // protected function render($name, $context = []) {
+    //     $file = __DIR__ . "/../App/Views/$name.view.php";
+
+    //     if (file_exists($file)) {
+    //         ob_start();
+    //         extract($context);
+    //         require $file;
+    //         $tpl = ob_get_clean();
+    //         echo $tpl;
+    //     } else {
+    //         echo "View '$name' not found";
+    //     }
+    // }
 }

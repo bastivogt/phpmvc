@@ -12,11 +12,16 @@ use Framework\FlashMessage;
 
 class TodoController extends BaseController {
 
-    private $model;
-
     public function __construct(TodoModel $model) {
+        parent::__construct();
         $this->model = $model;
     }
+
+    private $model;
+
+    // public function __construct(TodoModel $model) {
+    //     $this->model = $model;
+    // }
 
     private function getObjectOr404($id) {
         $todo = $this->model->findOne($id);
