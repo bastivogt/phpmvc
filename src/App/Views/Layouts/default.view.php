@@ -9,11 +9,11 @@ if (Session::has('message')) {
 
     $color = '';
     if ($type === FlashMessage::$TYPE_SUCCESS) {
-        $color = 'hsl(91, 89%, 52%)';
+        $color = '#81f218';
     } elseif ($type === FlashMessage::$TYPE_ERROR) {
-        $color = 'rgb(226, 47, 47)';
+        $color = '#e22f2f';
     } elseif ($type === FlashMessage::$TYPE_INFO) {
-        $color = 'rgb(47, 169, 226)';
+        $color = '#2fa9e2';
     }
 }
 ?>

@@ -38,10 +38,7 @@ class View
 
     public function renderSection(string $name): string
     {
-        if (!isset($this->sections[$name])) {
-            throw new RuntimeException("Section '$name' not found.");
-        }
-        return $this->sections[$name];
+        return $this->sections[$name] ?? '';
     }
 
     public function render(string $view, array $data = []): string
