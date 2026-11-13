@@ -8,6 +8,10 @@ use App\Controllers\TodoController;
 use App\Models\UserModel;
 use App\Controllers\UserController;
 use App\Controllers\PageController;
+use App\Controllers\AuthController;
+use App\Services\AuthService;
+
+
 
 $container = new DIContainer(); 
 
@@ -39,11 +43,18 @@ $container->set(UserController::class, function($container) {
     return new UserController($container->get(UserModel::class));
 });
 
+
+
+
+// AuthController
+$container->set(AuthController::class, function($container) {
+    return new AuthController($container->get(AuthService::class));
+});
 // AuthService
-use App\Services\AuthService;
 $container->set(AuthService::class, function($container) {
     return new AuthService($container->get(UserModel::class));
 });
+
 
 
 return $container;

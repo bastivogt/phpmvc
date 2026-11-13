@@ -3,6 +3,8 @@
 use Framework\DIContainer;
 use Framework\Database;
 use Framework\Session;
+use App\Services\AuthService;
+
 
 
 class App {
@@ -11,6 +13,7 @@ class App {
 
     public static $currentUserID = null;
     public static $container;
+    public static $user;
     
     public static function run() {
         
@@ -26,26 +29,32 @@ class App {
         require __DIR__ . '/../src/Framework/Bootstrap.php';
 
         Session::start();
-        Session::set('test', 'Hallo Test!');
+        //Session::set('test', 'Hallo Test!');
 
         self::$container = require __DIR__ . '/../src/App/Config/Container.php';
 
 
+        
 
 
 
         $db = self::$container->get(Database::class);
         $db->connect();
 
-        //d($_SESSION);
-        d(Session::get('test'));
+        $authService = self::$container->get(AuthService::class);   
+        // d($authService->isAuthenticated());
+        
+        if ($authService->isAuthenticated()) {
+            self::$user = $authService->getCurrentUser();
+        }
+        //d(self::$user);
 
         require '../src/App/Config/Routes.php';
     }
 }
-
-$app = new App();
-$app->run();
+App::run();
+//$app = new App();
+//$app->run();
 
 
 

@@ -2,9 +2,11 @@
 use App\Controllers\PageController;
 use App\Controllers\ProductController;
 use App\Controllers\TodoController;
+use App\Controllers\AuthController;
 use Framework\Router;
 
 $router = new Router();
+
 
 
 
@@ -28,6 +30,11 @@ $router->get('#^/todos/(?<id>\d+)/edit$#', [TodoController::class, 'edit']);
 $router->post('#^/todos/(?<id>\d+)$#', [TodoController::class, 'update']);
 $router->get('#^/todos/(?<id>\d+)/delete$#', [TodoController::class, 'delete']);
 $router->post('#^/todos/(?<id>\d+)/delete$#', [TodoController::class, 'destroy']);
+
+
+$router->get('#^/auth/login$#', [AuthController::class, 'loginForm']);
+$router->post('#^/auth/login$#', [AuthController::class, 'login']);
+$router->post('#^/auth/logout$#', [AuthController::class, 'logout']);
 
 
 $router->get('#^.*$#', [PageController::class, 'notFound']);

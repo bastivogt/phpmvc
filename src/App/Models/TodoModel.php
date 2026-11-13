@@ -62,6 +62,7 @@ class TodoModel extends BaseModel
             'description' => $todo->description,
             'done' => $todo->done ? 1 : 0 
         ]);
+        return $this->db->getConnection()->lastInsertId();
     }
 
     public function update($id, TodoEntity $todo)
@@ -72,11 +73,13 @@ class TodoModel extends BaseModel
             'description' => $todo->description,
             'done' => $todo->done ? 1 : 0
         ]);
+        return $this->db->getConnection()->lastInsertId();
     }
 
     public function delete($id)
     {
         $this->db->query("DELETE FROM " . self::$table . " WHERE id = :id", ['id' => $id]);
+        return true;
     }
 
 

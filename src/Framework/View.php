@@ -45,7 +45,7 @@ class View
     {
         extract($data);
         $viewFile = $this->viewDir . '/' . $view  . '.view' . '.php';
-        d($viewFile);
+
         if (!file_exists($viewFile)) {
             throw new RuntimeException("View file '$viewFile' not found.");
         }

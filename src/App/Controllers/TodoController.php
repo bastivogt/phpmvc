@@ -9,10 +9,12 @@ use App;
 use App\Config\Container;
 use Framework\Session;
 use Framework\FlashMessage;
+use App\Services\FlashService;
 
 class TodoController extends BaseController {
 
     public function __construct(TodoModel $model) {
+        //d('TodoController::__construct');
         parent::__construct();
         $this->model = $model;
     }
@@ -70,7 +72,9 @@ class TodoController extends BaseController {
             ]);
         }
         $this->model->create($todo);
-        Session::set('message', new FlashMessage('Todo created successfully', FlashMessage::$TYPE_SUCCESS));
+        //Session::set('message', new FlashMessage('Todo created successfully', FlashMessage::$TYPE_SUCCESS));
+        
+        FlashService::setFlash(new FlashMessage('Todo created successfully', FlashMessage::$TYPE_SUCCESS));
         redirect('/todos');
     }
 
@@ -103,7 +107,7 @@ class TodoController extends BaseController {
             ]);
         }
         $this->model->update($id, $todo);
-        Session::set('message', new FlashMessage('Todo updated successfully', FlashMessage::$TYPE_INFO));
+        FlashService::setFlash(new FlashMessage('Todo updated successfully', FlashMessage::$TYPE_INFO));
         return redirect('/todos');
     }
 
@@ -119,7 +123,7 @@ class TodoController extends BaseController {
     public function destroy($id) {
         $todo = $this->getObjectOr404((int)$id);
         $this->model->delete($id);
-        Session::set('message', new FlashMessage('Todo deleted successfully', FlashMessage::$TYPE_ERROR));
+        FlashService::setFlash(new FlashMessage('Todo deleted successfully', FlashMessage::$TYPE_ERROR));
         return redirect('/todos');
     }
 }
