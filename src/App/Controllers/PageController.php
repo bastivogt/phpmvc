@@ -1,12 +1,14 @@
 <?php
 namespace App\Controllers;  
 
+use Framework\BaseController;
 
-class PageController {
+
+class PageController extends BaseController {
     public function index() {
         
         d("PageController index called");
-        return view("Page/index", ['title' => 'Home']);
+        return $this->render("Page/index", ['title' => 'Home']);
     }
 
     public function notFound() {

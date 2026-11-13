@@ -2,7 +2,7 @@
 namespace App\Controllers;
 
 use App\Models\TodoModel;
-use Framework\Controller;
+use Framework\BaseController;
 
 use App\Entities\TodoEntity;
 use App;
@@ -10,7 +10,7 @@ use App\Config\Container;
 use Framework\Session;
 use Framework\FlashMessage;
 
-class TodoController {
+class TodoController extends BaseController {
 
     private $model;
 
@@ -29,16 +29,16 @@ class TodoController {
     public function index() {
         $todos = $this->model->findAll();
         d(App::$greeting);
-        return view('Todo/index', ['title' => 'Todo Index', 'todos' => $todos]);
+        return $this->render('Todo/index', ['title' => 'Todo Index', 'todos' => $todos]);
     }
 
     public function show($id) {
         $todo = $this->getObjectOr404((int)$id);
-        return view('Todo/show', ['title' => $todo->title, 'todo' => $todo]);
+        return $this->render('Todo/show', ['title' => $todo->title, 'todo' => $todo]);
     }
 
     public function create() {
-        return view('Todo/create', [
+        return $this->render('Todo/create', [
             'title' => 'Create Todo',
             'todo' => new TodoEntity(),
             'errors' => []
@@ -58,7 +58,7 @@ class TodoController {
             if (empty($todo->description)) {
                 $errors[] = 'Description is required';
             }
-            return view('Todo/create', [
+            return $this->render('Todo/create', [
                 'title' => 'Create Todo',
                 'todo' => $todo,
                 'errors' => $errors
@@ -71,7 +71,7 @@ class TodoController {
 
     public function edit($id) {
         $todo = $this->getObjectOr404((int)$id);
-        return view('Todo/edit', [
+        return $this->render('Todo/edit', [
             'title' => 'Edit Todo', 
             'todo' => $todo,
             'errors' => []
@@ -91,7 +91,7 @@ class TodoController {
             if (empty($todo->description)) {
                 $errors[] = 'Description is required';
             }
-            return view('Todo/edit', [
+            return $this->render('Todo/edit', [
                 'title' => 'Edit Todo',
                 'todo' => $todo,
                 'errors' => $errors
@@ -105,7 +105,7 @@ class TodoController {
 
     public function delete($id) {
         $todo = $this->getObjectOr404((int)$id);
-        return view('Todo/delete', [
+        return $this->render('Todo/delete', [
             'title' => 'Delete Todo',
             'todo' => $todo
         ]);
