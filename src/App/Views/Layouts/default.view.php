@@ -22,6 +22,8 @@ if (Session::has('message')) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <?php echo $this->renderSection('styles'); ?>
     <title>PHP MVC - <?php echo $this->renderSection('title'); ?></title>
 </head>
 <body>
@@ -34,6 +36,9 @@ if (Session::has('message')) {
         </div>
     <?php endif; ?>
     <div><?php echo $this->renderSection('content'); ?></div>
-    
+
+
+    <script src="assets/js/app.js"></script>
+    <?php echo $this->renderSection('scripts'); ?>
 </body>
 </html>
