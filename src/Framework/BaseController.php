@@ -22,9 +22,13 @@ class BaseController {
         return $this;
     }
 
-    protected function redirect(string $url): self {
-        header("Location: $url");
+    protected function redirect(): self {
         return $this;
+    }
+
+    protected function to(string $url): self {
+        header("Location: $url");
+        exit;
     }
 
     protected function withErrors(array $errors): self {
@@ -33,7 +37,6 @@ class BaseController {
     }
 
     protected function withFlash(FlashMessage $message): self {
-        d("withFlash");
         FlashService::setFlash($message);
         return $this;
     }

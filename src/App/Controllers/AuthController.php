@@ -25,7 +25,7 @@ class AuthController extends BaseController
     public function loginForm()
     {
         if($this->authService->isAuthenticated()) {
-            return redirect('/');
+            return $this->redirect()->to('/');
         }
         CSRFService::generateToken();
         return $this->render('Auth/login', [
@@ -41,7 +41,7 @@ class AuthController extends BaseController
         $csrfToken = $_POST['csrfToken'] ?? '';
 
         if (!CSRFService::validateToken($csrfToken)) {
-            return redirect('/auth/login');
+            return $this->redirect()->to('/auth/login');
 
         }
 
@@ -50,16 +50,18 @@ class AuthController extends BaseController
             // Set session or cookie for authenticated user
             // FlashService::setFlash(new FlashMessage('Login successful', FlashMessage::$TYPE_SUCCESS));
             // return redirect('/');
-            return $this->withFlash(new FlashMessage('Login successful', FlashMessage::$TYPE_SUCCESS))
-                ->redirect('/');
+            return $this->redirect()
+                ->withFlash(new FlashMessage('Login successful', FlashMessage::$TYPE_SUCCESS))
+                ->to('/');
         } else {
             // ErrorService::setErrors(['Invalid email or password']);
             // FlashService::setFlash(new FlashMessage('Invalid email or password', FlashMessage::$TYPE_ERROR));
             // return redirect('/auth/login');
-            return $this->withErrors(['Invalid email or password'])
+            return $this->redirect()
+                ->withErrors(['Invalid email or password'])
                 ->withInput($_POST)
                 ->withFlash(new FlashMessage('Invalid email or password', FlashMessage::$TYPE_ERROR))
-                ->redirect('/auth/login');
+                ->to('/auth/login');
         }
     }
 
@@ -67,6 +69,8 @@ class AuthController extends BaseController
     {
         //FlashService::setFlash(new FlashMessage('Logged out successfully', FlashMessage::$TYPE_SUCCESS));
         $this->authService->logout();
-        return $this->withFlash(new FlashMessage('Logged out successfully', FlashMessage::$TYPE_SUCCESS))->redirect('/auth/login');
+        return $this->redirect()
+            ->withFlash(new FlashMessage('Logged out successfully', FlashMessage::$TYPE_SUCCESS))
+            ->to('/auth/login');
     }
 }

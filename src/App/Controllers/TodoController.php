@@ -38,12 +38,16 @@ class TodoController extends BaseController {
     public function index() {
         $todos = $this->model->findAll();
         //d(App::$greeting);
-        return $this->render('Todo/index', ['title' => 'Todo Index', 'todos' => $todos]);
+        return $this->render('Todo/index', [
+            'title' => 'Todo Index', 'todos' => $todos]);
     }
 
     public function show($id) {
         $todo = $this->getObjectOr404((int)$id);
-        return $this->render('Todo/show', ['title' => $todo->title, 'todo' => $todo]);
+        return $this->render('Todo/show', [
+            'title' => $todo->title,
+             'todo' => $todo
+        ]);
     }
 
     public function create() {
@@ -58,6 +62,7 @@ class TodoController extends BaseController {
         $todo->fill($_POST);
         $todo->done = isset($_POST['done']) ? 1 : 0;
 
+        
         if (empty($todo->title) || empty($todo->description)) {
             $errors = [];
             if (empty($todo->title)) {
@@ -66,23 +71,28 @@ class TodoController extends BaseController {
             if (empty($todo->description)) {
                 $errors[] = 'Description is required';
             }
-            FlashService::setFlash(new FlashMessage('Please correct the errors', FlashMessage::$TYPE_ERROR));
-            ErrorService::setErrors($errors); // Assuming you have an ErrorService to handle errors
-            return redirect('/todos/create');
+            // FlashService::setFlash(new FlashMessage('Please correct the errors', FlashMessage::$TYPE_ERROR));
+            // ErrorService::setErrors($errors); // Assuming you have an ErrorService to handle errors
+            // return redirect('/todos/create');
+            return $this->redirect()
+                ->withErrors($errors)
+                ->withInput($_POST)
+                ->withFlash(new FlashMessage('Please correct the errors', FlashMessage::$TYPE_ERROR))
+                ->to('/todos/create');
         }
         $this->model->create($todo);
         //Session::set('message', new FlashMessage('Todo created successfully', FlashMessage::$TYPE_SUCCESS));
         
-        FlashService::setFlash(new FlashMessage('Todo created successfully', FlashMessage::$TYPE_SUCCESS));
-        redirect('/todos');
+        return $this->redirect()
+            ->withFlash(new FlashMessage('Todo created successfully', FlashMessage::$TYPE_SUCCESS))
+            ->to('/todos');
     }
 
     public function edit($id) {
         $todo = $this->getObjectOr404((int)$id);
         return $this->render('Todo/edit', [
             'title' => 'Edit Todo', 
-            'todo' => $todo,
-            'errors' => []
+            'todo' => $todo
         ]);
     }
 
@@ -99,13 +109,20 @@ class TodoController extends BaseController {
             if (empty($todo->description)) {
                 $errors[] = 'Description is required';
             }
-            FlashService::setFlash(new FlashMessage('Please correct the errors', FlashMessage::$TYPE_ERROR));
-            ErrorService::setErrors($errors);
-            return redirect("/todos/{$id}/edit");
+            // FlashService::setFlash(new FlashMessage('Please correct the errors', FlashMessage::$TYPE_ERROR));
+            // ErrorService::setErrors($errors);
+            // return redirect("/todos/{$id}/edit");
+            return $this->redirect()
+                ->withErrors($errors)
+                ->withInput($_POST)
+                ->withFlash(new FlashMessage('Please correct the errors', FlashMessage::$TYPE_ERROR))
+                ->to("/todos/{$id}/edit");
         }
         $this->model->update($id, $todo);
-        FlashService::setFlash(new FlashMessage('Todo updated successfully', FlashMessage::$TYPE_INFO));
-        return redirect('/todos');
+        // FlashService::setFlash(new FlashMessage('Todo updated successfully', FlashMessage::$TYPE_INFO));
+        return $this->redirect()
+            ->withFlash(new FlashMessage('Todo updated successfully', FlashMessage::$TYPE_INFO))
+            ->to('/todos');
     }
 
 
@@ -120,7 +137,9 @@ class TodoController extends BaseController {
     public function destroy($id) {
         $todo = $this->getObjectOr404((int)$id);
         $this->model->delete($id);
-        FlashService::setFlash(new FlashMessage('Todo deleted successfully', FlashMessage::$TYPE_ERROR));
-        return redirect('/todos');
+        // FlashService::setFlash(new FlashMessage('Todo deleted successfully', FlashMessage::$TYPE_ERROR));
+        return $this->redirect()
+            ->withFlash(new FlashMessage('Todo deleted successfully', FlashMessage::$TYPE_ERROR))
+            ->to('/todos');
     }
 }
