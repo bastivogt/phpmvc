@@ -8,10 +8,13 @@ use Framework\Session;
 class AuthService {
     private $userModel;
 
+    
+
     function __construct(UserModel $userModel) {
-        $this->userModel = $userModel;
-        
+        $this->userModel = $userModel;  
     }
+
+
 
     public function authenticate($email, $password) {
         $isAuthenticated = $this->userModel->authenticate($email, $password);
