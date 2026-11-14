@@ -14,6 +14,8 @@ class TodoEntity extends BaseEntity {
     public string $created_at = '';
     public string $updated_at = '';
 
-
+    public function __construct(array $data = null) {
+        parent::__construct($data);
+    }
 
 }
