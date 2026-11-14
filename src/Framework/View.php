@@ -41,7 +41,7 @@ class View
         return $this->sections[$name] ?? '';
     }
 
-    public function render(string $view, array $data = []): string
+    public function render(string $view, array $data = [])
     {
         extract($data);
         $viewFile = $this->viewDir . '/' . $view  . '.view' . '.php';
@@ -61,7 +61,8 @@ class View
             include $layoutFile;
             $content = ob_get_clean();
         }
-        return $content;    
+        echo $content;
+        //return $content;    
     }
 
     public function include(string $view, array $data = []): void

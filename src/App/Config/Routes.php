@@ -40,5 +40,5 @@ $router->post('#^/auth/logout$#', [AuthController::class, 'logout']);
 $router->get('#^.*$#', [PageController::class, 'notFound']);
 
 
-
-echo $router->dispatch($method, $path);
+// echo $router->dispatch($method, $path);
+$router->dispatch($method, $path);

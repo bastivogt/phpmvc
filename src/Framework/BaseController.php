@@ -12,9 +12,9 @@ class BaseController {
         $this->view = new View(__DIR__ . '/../App/Views');
     }
 
-    protected function render(string $view, array $data = []): string
-    {
-        return $this->view->render($view, $data);
+    protected function render(string $view, array $data = []): self {
+        $this->view->render($view, $data);
+        return $this;
     }
 
     // protected function render($name, $context = []) {
