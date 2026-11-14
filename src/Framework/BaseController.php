@@ -5,6 +5,7 @@ use Framework\View;
 use App\Services\ErrorService;
 use App\Services\FlashService;
 use Framework\FlashMessage;
+use App\Services\InputService;  
 
 
 class BaseController {
@@ -34,6 +35,11 @@ class BaseController {
     protected function withFlash(FlashMessage $message): self {
         d("withFlash");
         FlashService::setFlash($message);
+        return $this;
+    }
+
+    protected function withInput(array $data): self {
+        InputService::set($data);
         return $this;
     }
 

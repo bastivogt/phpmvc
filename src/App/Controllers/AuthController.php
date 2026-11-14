@@ -57,6 +57,7 @@ class AuthController extends BaseController
             // FlashService::setFlash(new FlashMessage('Invalid email or password', FlashMessage::$TYPE_ERROR));
             // return redirect('/auth/login');
             return $this->withErrors(['Invalid email or password'])
+                ->withInput($_POST)
                 ->withFlash(new FlashMessage('Invalid email or password', FlashMessage::$TYPE_ERROR))
                 ->redirect('/auth/login');
         }

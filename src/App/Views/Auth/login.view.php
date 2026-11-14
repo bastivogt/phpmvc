@@ -14,7 +14,7 @@
         <?= \App\Services\CSRFService::getTokenInputField() ?>
         <div>
             <label for="email">Email:</label>
-            <input type="text" id="email" name="email">
+            <input type="text" id="email" name="email" value="<?= esc(old('email', '')) ?>">
         </div>
         <div>
             <label for="password">Password:</label>

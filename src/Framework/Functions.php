@@ -1,6 +1,7 @@
 <?php
 
 use Framework\View;
+use App\Services\InputService;
 
 /**
  * Get the base path
@@ -102,4 +103,9 @@ function getPartial(string $name, array $context = []): void
     } else {
         echo "Partial '$name' not found";
     }
+}
+
+
+function old(string $key, $default = null): mixed {
+    return InputService::get($key, $default);
 }
