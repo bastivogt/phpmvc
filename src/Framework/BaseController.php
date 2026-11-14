@@ -2,6 +2,10 @@
 namespace Framework;
 
 use Framework\View;
+use App\Services\ErrorService;
+use App\Services\FlashService;
+use Framework\FlashMessage;
+
 
 class BaseController {
 
@@ -14,6 +18,22 @@ class BaseController {
 
     protected function render(string $view, array $data = []): self {
         $this->view->render($view, $data);
+        return $this;
+    }
+
+    protected function redirect(string $url): self {
+        header("Location: $url");
+        return $this;
+    }
+
+    protected function withErrors(array $errors): self {
+        ErrorService::setErrors($errors);
+        return $this;   
+    }
+
+    protected function withFlash(FlashMessage $message): self {
+        d("withFlash");
+        FlashService::setFlash($message);
         return $this;
     }
 

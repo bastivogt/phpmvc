@@ -48,20 +48,24 @@ class AuthController extends BaseController
         $isAuthenticated = $this->authService->authenticate($email, $password);
         if ($isAuthenticated) {
             // Set session or cookie for authenticated user
-            FlashService::setFlash(new FlashMessage('Login successful', FlashMessage::$TYPE_SUCCESS));
-            return redirect('/');
+            // FlashService::setFlash(new FlashMessage('Login successful', FlashMessage::$TYPE_SUCCESS));
+            // return redirect('/');
+            return $this->withFlash(new FlashMessage('Login successful', FlashMessage::$TYPE_SUCCESS))
+                ->redirect('/');
         } else {
-            ErrorService::setErrors(['Invalid email or password']);
-            FlashService::setFlash(new FlashMessage('Invalid email or password', FlashMessage::$TYPE_ERROR));
-            return redirect('/auth/login');
-
+            // ErrorService::setErrors(['Invalid email or password']);
+            // FlashService::setFlash(new FlashMessage('Invalid email or password', FlashMessage::$TYPE_ERROR));
+            // return redirect('/auth/login');
+            return $this->withErrors(['Invalid email or password'])
+                ->withFlash(new FlashMessage('Invalid email or password', FlashMessage::$TYPE_ERROR))
+                ->redirect('/auth/login');
         }
     }
 
     public function logout()
     {
-        FlashService::setFlash(new FlashMessage('Logged out successfully', FlashMessage::$TYPE_SUCCESS));
+        //FlashService::setFlash(new FlashMessage('Logged out successfully', FlashMessage::$TYPE_SUCCESS));
         $this->authService->logout();
-        return redirect('/auth/login');
+        return $this->withFlash(new FlashMessage('Logged out successfully', FlashMessage::$TYPE_SUCCESS))->redirect('/auth/login');
     }
 }
