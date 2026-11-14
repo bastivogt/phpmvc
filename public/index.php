@@ -12,7 +12,7 @@ class App {
 
     public static $greeting = "Hello from App";
 
-    public static $currentUserID = null;
+    //public static $currentUserID = null;
     public static $container;
     public static $user;
     
