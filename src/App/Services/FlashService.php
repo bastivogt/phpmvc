@@ -14,7 +14,6 @@ class FlashService
     public static function getFlash(): ?FlashMessage
     {
         $message = Session::get('flash');
-        d("HJKHKJHKJH");
         Session::remove('flash');
         return $message;
     }

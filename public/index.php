@@ -7,6 +7,7 @@ use App\Services\AuthService;
 
 
 
+
 class App {
 
     public static $greeting = "Hello from App";
@@ -43,11 +44,13 @@ class App {
 
         $authService = self::$container->get(AuthService::class);   
         // d($authService->isAuthenticated());
-        
+
         if ($authService->isAuthenticated()) {
             self::$user = $authService->getCurrentUser();
         }
         //d(self::$user);
+
+        
 
         require '../src/App/Config/Routes.php';
     }

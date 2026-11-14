@@ -4,12 +4,10 @@ use Framework\FlashMessage;
 use App\Services\FlashService;
 
 if (FlashService::hasFlash()) {
-    d("Flash exists");
     $flash = FlashService::getFlash();
     $type = $flash->getType();
     $message = $flash->getMessage();
 
-    d("Flash type: $type, message: $message");
     $color = '';
     if ($type === FlashMessage::$TYPE_SUCCESS) {
         $color = '#81f218';
