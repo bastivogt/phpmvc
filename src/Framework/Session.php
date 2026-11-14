@@ -37,4 +37,11 @@ class Session
             session_destroy();
         }
     }
+
+    public static function regenerate()
+    {
+        if (session_status() === PHP_SESSION_ACTIVE) {
+            session_regenerate_id(true);
+        }
+    }
 }

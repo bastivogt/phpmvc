@@ -10,6 +10,8 @@ use App\Services\AuthService;
 
 class App {
 
+    
+
     public static $greeting = "Hello from App";
 
     //public static $currentUserID = null;
@@ -19,6 +21,7 @@ class App {
     public static function run() {
         
         // $_SESSION['test'] = 'value';
+        //session_start();
         
         
 
