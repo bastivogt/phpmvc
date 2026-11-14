@@ -10,8 +10,10 @@ $router = new Router();
 
 
 
-
+// Home route
 $router->get('#^/$#', [PageController::class, 'index']);
+
+// Product routes
 $router->get('#^/products$#', [ProductController::class, 'index']);
 $router->get('#^/products/(?<id>\d+)$#', [ProductController::class, 'show']);
 $router->get('#^/products/create$#', [ProductController::class, 'create']);
@@ -31,14 +33,14 @@ $router->post('#^/todos/(?<id>\d+)$#', [TodoController::class, 'update']);
 $router->get('#^/todos/(?<id>\d+)/delete$#', [TodoController::class, 'delete']);
 $router->post('#^/todos/(?<id>\d+)/delete$#', [TodoController::class, 'destroy']);
 
-
+// Auth routes
 $router->get('#^/auth/login$#', [AuthController::class, 'loginForm']);
 $router->post('#^/auth/login$#', [AuthController::class, 'login']);
 $router->post('#^/auth/logout$#', [AuthController::class, 'logout']);
 
-
+// 404 route
 $router->get('#^.*$#', [PageController::class, 'notFound']);
 
 
 // echo $router->dispatch($method, $path);
-$router->dispatch($method, $path);
+return $router->dispatch($method, $path);
