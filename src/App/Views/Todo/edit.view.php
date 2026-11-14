@@ -5,10 +5,10 @@
 <?php $this->section("content"); ?>
 <h1>Edit Todo</h1>
 
-<?php if(!empty($errors)) : ?>
-    <ul>
-        <?php foreach($errors as $error) : ?>
-            <li><?php echo $error; ?></li>
+<?php if (\App\Services\ErrorService::hasErrors()) : ?>
+    <ul class="error">
+        <?php foreach (\App\Services\ErrorService::getErrors() as $error) : ?>
+            <li><?= esc($error) ?></li>
         <?php endforeach; ?>
     </ul>
 <?php endif; ?>

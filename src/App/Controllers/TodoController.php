@@ -11,6 +11,8 @@ use Framework\Session;
 use Framework\FlashMessage;
 use App\Services\FlashService;
 
+use App\Services\ErrorService;
+
 class TodoController extends BaseController {
 
     public function __construct(TodoModel $model) {
@@ -35,7 +37,7 @@ class TodoController extends BaseController {
 
     public function index() {
         $todos = $this->model->findAll();
-        d(App::$greeting);
+        //d(App::$greeting);
         return $this->render('Todo/index', ['title' => 'Todo Index', 'todos' => $todos]);
     }
 
@@ -47,8 +49,7 @@ class TodoController extends BaseController {
     public function create() {
         return $this->render('Todo/create', [
             'title' => 'Create Todo',
-            'todo' => new TodoEntity(),
-            'errors' => []
+            'todo' => new TodoEntity()
         ]);
     }
 
@@ -65,11 +66,9 @@ class TodoController extends BaseController {
             if (empty($todo->description)) {
                 $errors[] = 'Description is required';
             }
-            return $this->render('Todo/create', [
-                'title' => 'Create Todo',
-                'todo' => $todo,
-                'errors' => $errors
-            ]);
+            FlashService::setFlash(new FlashMessage('Please correct the errors', FlashMessage::$TYPE_ERROR));
+            ErrorService::setErrors($errors); // Assuming you have an ErrorService to handle errors
+            return redirect('/todos/create');
         }
         $this->model->create($todo);
         //Session::set('message', new FlashMessage('Todo created successfully', FlashMessage::$TYPE_SUCCESS));
@@ -100,11 +99,9 @@ class TodoController extends BaseController {
             if (empty($todo->description)) {
                 $errors[] = 'Description is required';
             }
-            return $this->render('Todo/edit', [
-                'title' => 'Edit Todo',
-                'todo' => $todo,
-                'errors' => $errors
-            ]);
+            FlashService::setFlash(new FlashMessage('Please correct the errors', FlashMessage::$TYPE_ERROR));
+            ErrorService::setErrors($errors);
+            return redirect("/todos/{$id}/edit");
         }
         $this->model->update($id, $todo);
         FlashService::setFlash(new FlashMessage('Todo updated successfully', FlashMessage::$TYPE_INFO));
